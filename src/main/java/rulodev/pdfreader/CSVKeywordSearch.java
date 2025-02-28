@@ -20,7 +20,7 @@ public class CSVKeywordSearch {
 
     public static void main(String[] args) {
         
-        String inputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\input\\"; // Directorio con los archivos CSV
+        String inputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\output\\"; // Directorio con los archivos CSV
         String outputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\"; // Directorio de salida
         String startKeyword = "Account"; // Palabra clave inicial
         String stopKeyword = "PAYMENT"; // Palabra clave final
