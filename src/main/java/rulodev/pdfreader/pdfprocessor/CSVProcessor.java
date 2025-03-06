@@ -1,4 +1,5 @@
-package rulodev.pdfreader;
+
+package rulodev.pdfreader.pdfprocessor;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -12,32 +13,35 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- *
- * @author Raul_Torres
- */
-public class CSVKeywordSearch {
 
-    public static void main(String[] args) {
-        
-        String inputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\input\\"; // Directorio con los archivos CSV
-        String outputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\"; // Directorio de salida
-        String startKeyword = "Account"; // Palabra clave inicial
-        String stopKeyword = "PAYMENT"; // Palabra clave final
-        
+public class CSVProcessor {
+    
+    private String inputDir;
+    private String outputDir;
+    private String startKeyword;
+    private String stopKeyword;
 
-        try {
-            Files.createDirectories(Paths.get(outputDir));
-            
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(inputDir), "*.csv");
-            for (Path csvFilePath : directoryStream) {
-                processCSVFile(csvFilePath.toString(), outputDir, startKeyword, stopKeyword);
-            }
-        } catch (IOException e) {
-        }
+    public CSVProcessor(String inputDir, String outputDir, String startKeyword, String stopKeyword) {
+        this.inputDir = inputDir;
+        this.outputDir = outputDir;
+        this.startKeyword = startKeyword;
+        this.stopKeyword = stopKeyword;
     }
     
-    private static void processCSVFile(String csvFile, String outputDir, String startKeyword, String stopKeyword) {
+    public void processFiles() throws CsvException {
+        try {
+            Files.createDirectories(Paths.get(outputDir));
+
+            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(inputDir), "*.csv");
+            for (Path csvFilePath : directoryStream) {
+                processCSVFile(csvFilePath.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processCSVFile(String csvFile) throws CsvException {
         boolean foundStartKeyword = false;
         String newCsvFile = outputDir + Paths.get(csvFile).getFileName().toString().replace(".csv", "_filtered.csv");
 
@@ -52,18 +56,17 @@ public class CSVKeywordSearch {
                     }
                     if (cell.contains(stopKeyword)) {
                         System.out.println("Palabra clave de fin encontrada en " + csvFile + ". Deteniendo ejecución.");
-                        return; // Detener la ejecución del programa
+                        return;
                     }
                 }
                 if (foundStartKeyword) {
-                    // Escribir la fila actual y las siguientes en el nuevo archivo
                     writer.write(String.join(",", row));
                     writer.newLine();
                 }
             }
-            
+
         } catch (IOException | CsvException e) {
         }
+    
     }
-
 }

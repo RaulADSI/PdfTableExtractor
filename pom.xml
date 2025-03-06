@@ -9,31 +9,58 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>rulodev.pdfreader.PdfReader</exec.mainClass>
+        <exec.mainClass>rulodev.pdfreader.PDFProcessorMain</exec.mainClass>
     </properties>
-    <dependencies>
-    
-    <dependency>
+    <build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <version>3.3.0</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <mainClass>rulodev.pdfreader.PDFProcessorMain</mainClass>
+          </manifest>
+        </archive>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+      </configuration>
+      <executions>
+        <execution>
+          <id>make-assembly</id>
+          <phase>package</phase>
+          <goals>
+            <goal>single</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
+<dependencies>
+         <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-csv</artifactId>
         <version>1.9.0</version>
     </dependency>
     <dependency>
-    <groupId>technology.tabula</groupId>
-    <artifactId>tabula</artifactId>
-    <version>1.0.4</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.pdfbox</groupId>
-    <artifactId>pdfbox</artifactId>
-    <version>2.0.24</version>
-</dependency>
-<dependency>
-    <groupId>com.opencsv</groupId>
-    <artifactId>opencsv</artifactId>
-    <version>5.5.2</version>
-</dependency>
+        <groupId>technology.tabula</groupId>
+        <artifactId>tabula</artifactId>
+        <version>1.0.4</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.24</version>
+    </dependency>
+    <dependency>
+        <groupId>com.opencsv</groupId>
+        <artifactId>opencsv</artifactId>
+        <version>5.5.2</version>
+    </dependency>
 
-</dependencies>
+    </dependencies>
 
 </project>
