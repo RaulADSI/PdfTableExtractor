@@ -1,5 +1,6 @@
 package rulodev.pdfreader;
 
+import java.util.Arrays;
 import java.util.List;
 import static rulodev.pdfreader.pdfprocessor.CSVArrayList.readCSV;
 
@@ -22,13 +23,32 @@ public class CSVArrayListProcessor {
         }
 
         //Acceder a un elemento específico (fila 1, columna 0)
-        int fila = 7;     // Recordemos que el índice inicia en 0
-        int columna = 0;
-        if (matrix.size() > fila && matrix.get(fila).size() > columna) {
-            String elemento = matrix.get(fila).get(columna);
-            System.out.println("\nElemento en la fila " + (fila + 1) + ", columna " + (columna + 1) + " : " + elemento);
-        } else {
-            System.out.println("El índice solicitado excede el rango de datos.");
+//        int fila = 7;     // Recordemos que el índice inicia en 0
+//        int columna = 0;
+//        if (matrix.size() > fila && matrix.get(fila).size() > columna) {
+//            String elemento = matrix.get(fila).get(columna);
+//            System.out.println("\nElemento en la fila " + (fila + 1) + ", columna " + (columna + 1) + " : " + elemento);
+//        } else {
+//            System.out.println("El índice solicitado excede el rango de datos.");
+//        }
+        List<int[]> positions = Arrays.asList(
+            new int[]{1, 0},  
+            new int[]{7, 0},  
+            new int[]{7, 2},
+            new int[]{7,3},
+            new int[]{4, 11}
+        );
+        System.out.println("\nData filtered by position");
+        for (int[] position : positions) {
+            int fila = position[0];
+            int columna = position[1];
+            
+            if (fila < matrix.size() && columna < matrix.get(fila).size()) {
+                String valor = matrix.get(fila).get(columna);
+                System.out.println("Fila " + (fila + 1) + ", Columna " + (columna + 1) + " -> " + valor);
+            } else {
+                System.out.println("Fila " + (fila + 1) + ", Columna " + (columna + 1) + " está fuera de rango.");
+            }
         }
     }
 

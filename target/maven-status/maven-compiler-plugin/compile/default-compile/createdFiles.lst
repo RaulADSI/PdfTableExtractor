@@ -1,4 +1,4 @@
 rulodev\pdfreader\pdfprocessor\PDFProcessor.class
+rulodev\pdfreader\pdfprocessor\CSVArrayList.class
 rulodev\pdfreader\pdfprocessor\CSVProcessor.class
-rulodev\pdfreader\CSVKeywordSearch.class
 rulodev\pdfreader\PDFProcessorMain.class
