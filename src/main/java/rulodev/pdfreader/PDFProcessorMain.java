@@ -19,7 +19,7 @@ public class PDFProcessorMain {
         String stopKeyword = "PAYMENT";
 
         PDFProcessor pdfProcessor = new PDFProcessor(pdfInputDir, pdfOutputDir);
-        CSVProcessor csvProcessor = new CSVProcessor(csvInputDir, csvOutputDir, startKeyword, stopKeyword);
+        CSVProcessor csvProcessor = new CSVProcessor(csvInputDir, csvOutputDir);
 
         System.out.println("Procesando archivos PDF...");
         pdfProcessor.processFiles();

@@ -20,8 +20,9 @@ public class CSVProcessor {
     private String outputDir;
     private String startKeyword;
     private String stopKeyword;
+    
 
-    public CSVProcessor(String inputDir, String outputDir, String startKeyword, String stopKeyword) {
+    public CSVProcessor(String inputDir, String outputDir) {
         this.inputDir = inputDir;
         this.outputDir = outputDir;
         this.startKeyword = startKeyword;
@@ -37,7 +38,6 @@ public class CSVProcessor {
                 processCSVFile(csvFilePath.toString());
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -69,4 +69,6 @@ public class CSVProcessor {
         }
     
     }
+
+   
 }
