@@ -1,5 +1,8 @@
 package rulodev.pdfreader;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import static rulodev.pdfreader.pdfprocessor.CSVArrayList.readCSV;
@@ -31,24 +34,34 @@ public class CSVArrayListProcessor {
 //        } else {
 //            System.out.println("El índice solicitado excede el rango de datos.");
 //        }
-        List<int[]> positions = Arrays.asList(
+       List<int[]> positions = Arrays.asList(
             new int[]{1, 0},  
             new int[]{7, 0},  
             new int[]{7, 2},
-            new int[]{7,3},
+            new int[]{7, 3},
             new int[]{4, 11}
         );
-        System.out.println("\nData filtered by position");
-        for (int[] position : positions) {
-            int fila = position[0];
-            int columna = position[1];
-            
-            if (fila < matrix.size() && columna < matrix.get(fila).size()) {
-                String valor = matrix.get(fila).get(columna);
-                System.out.println("Fila " + (fila + 1) + ", Columna " + (columna + 1) + " -> " + valor);
-            } else {
-                System.out.println("Fila " + (fila + 1) + ", Columna " + (columna + 1) + " está fuera de rango.");
+
+        String outputFilePath = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\FilteredData.csv";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath))) {
+            writer.write("Account,Invoice Date,Service from,Service to, Amount"); // Escribir encabezados
+            writer.newLine();
+
+             for (int[] position : positions) {
+                int fila = position[0];
+                int columna = position[1];
+
+                if (fila < matrix.size() && columna < matrix.get(fila).size()) {
+                    String valor = matrix.get(fila).get(columna);
+                    writer.write(valor + ","); // Separar valores por comas
+                } else {
+                    writer.write("Fuera de Rango,"); // Manejar excepciones
+                }
             }
+            System.out.println("¡Datos guardados en el archivo CSV en: " + outputFilePath);
+        } catch (IOException e) {
+            System.err.println("Ocurrió un error al escribir el archivo CSV: " + e.getMessage());
         }
     }
 
