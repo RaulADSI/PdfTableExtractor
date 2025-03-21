@@ -16,36 +16,46 @@ import org.apache.pdfbox.text.PDFTextStripper;
 public class PDFProcessor {
 
     private String inputDir;
-    private String outputDir;
+    private String outputFilePath;
 
-    public PDFProcessor(String inputDir, String outPutDir) {
+    public PDFProcessor(String inputDir, String outputFilePath) {
         this.inputDir = inputDir;
-        this.outputDir = outPutDir;
+        this.outputFilePath = outputFilePath;
     }
+    
+    private String removeSpecialCharacters(String input) {
+    if (input == null) {
+        return ""; // Devuelve una cadena vacía si la entrada es null.
+    }
+    return input.replaceAll("[^a-zA-Z0-9\\s.]", ""); // Elimina todo excepto letras, números y espacios.
+}
+
 
     public void processFiles() {
+        List<List<String>> consolidatedTable = new ArrayList<>();
         try {
-            Files.createDirectories(Paths.get(outputDir));
-
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(inputDir), "*.pdf");
             for (Path pdfFilePath : directoryStream) {
-                processPDFFile(pdfFilePath.toFile());
+                List<List<String>> table = processPDFFile(pdfFilePath.toFile());
+                consolidatedTable.addAll(table);
             }
+            saveToCSV(consolidatedTable, outputFilePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    private void processPDFFile(File pdfFile){
-         try {
+
+    private List<List<String>> processPDFFile(File pdfFile) {
+        List<List<String>> table = new ArrayList<>();
+        try {
             PDDocument document = PDDocument.load(pdfFile);
             PDFTextStripper pdfStripper = new PDFTextStripper();
             String text = pdfStripper.getText(document);
             String[] lines = text.split("\\r?\\n");
 
-            List<List<String>> table = new ArrayList<>();
             for (String line : lines) {
-                String[] columns = line.split("\\s+");
+                String cleanedLine = removeSpecialCharacters(line);
+                String[] columns = cleanedLine.split("\\s+");
                 List<String> row = new ArrayList<>();
                 for (String column : columns) {
                     row.add(column);
@@ -53,29 +63,22 @@ public class PDFProcessor {
                 table.add(row);
             }
 
-            String outputFilePath = outputDir + pdfFile.getName().replace(".pdf", ".csv");
-            saveToCSV(table, outputFilePath);
-
             document.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return table;
     }
-    
-     private void saveToCSV(List<List<String>> table, String filePath) {
-        try {
-            File outputFile = new File(filePath);
-            outputFile.getParentFile().mkdirs();
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
-                for (List<String> row : table) {
-                    writer.write(String.join(",", row));
-                    writer.newLine();
-                }
+    private void saveToCSV(List<List<String>> table, String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (List<String> row : table) {
+                writer.write(String.join(",", row));
+                writer.newLine();
             }
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
