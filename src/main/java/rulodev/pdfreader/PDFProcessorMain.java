@@ -1,7 +1,6 @@
 package rulodev.pdfreader;
 
 import com.opencsv.exceptions.CsvException;
-import rulodev.pdfreader.pdfprocessor.CSVProcessor;
 import rulodev.pdfreader.pdfprocessor.PDFProcessor;
 
 /**
@@ -11,20 +10,15 @@ import rulodev.pdfreader.pdfprocessor.PDFProcessor;
 public class PDFProcessorMain {
 
     public static void main(String[] args) throws CsvException {
-        String pdfInputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\Mr Darsh\\";
-        String pdfOutputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\output\\";
-        String csvInputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\output\\";
-        String csvOutputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\";
-        String startKeyword = "Account";
-        String stopKeyword = "PAYMENT";
+        String pdfInputDir = "C:\\Users\\strategic\\OneDrive\\Documentos\\Rentify\\930 WareHouse\\FLP";
+        String consolidatedOutputFile = "C:\\Users\\strategic\\OneDrive\\Documentos\\consolidated_output1.csv";
+        String startKeyword = "CURRENT BILL";
+        String stopKeyword = "1-800-4OUTAGE";
 
-        PDFProcessor pdfProcessor = new PDFProcessor(pdfInputDir, pdfOutputDir);
-        CSVProcessor csvProcessor = new CSVProcessor(csvInputDir, csvOutputDir);
+        PDFProcessor pdfProcessor = new PDFProcessor(pdfInputDir, consolidatedOutputFile);
 
         System.out.println("Procesando archivos PDF...");
         pdfProcessor.processFiles();
 
-        System.out.println("Procesando archivos CSV...");
-        csvProcessor.processFiles();
     }
 }

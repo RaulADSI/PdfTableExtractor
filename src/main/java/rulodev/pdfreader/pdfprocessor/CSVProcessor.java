@@ -1,4 +1,3 @@
-
 package rulodev.pdfreader.pdfprocessor;
 
 import com.opencsv.CSVReader;
@@ -13,22 +12,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-
 public class CSVProcessor {
-    
+
     private String inputDir;
     private String outputDir;
     private String startKeyword;
     private String stopKeyword;
-    
 
-    public CSVProcessor(String inputDir, String outputDir) {
+    public CSVProcessor(String inputDir, String outputDir, String startKeyword, String stopKeyword) {
         this.inputDir = inputDir;
         this.outputDir = outputDir;
         this.startKeyword = startKeyword;
         this.stopKeyword = stopKeyword;
     }
+
     
+
     public void processFiles() throws CsvException {
         try {
             Files.createDirectories(Paths.get(outputDir));
@@ -45,8 +44,7 @@ public class CSVProcessor {
         boolean foundStartKeyword = false;
         String newCsvFile = outputDir + Paths.get(csvFile).getFileName().toString().replace(".csv", "_filtered.csv");
 
-        try (CSVReader reader = new CSVReader(new FileReader(csvFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(newCsvFile))) {
+        try (CSVReader reader = new CSVReader(new FileReader(csvFile)); BufferedWriter writer = new BufferedWriter(new FileWriter(newCsvFile))) {
             List<String[]> allRows = reader.readAll();
 
             for (String[] row : allRows) {
@@ -67,8 +65,7 @@ public class CSVProcessor {
 
         } catch (IOException | CsvException e) {
         }
-    
+
     }
 
-   
 }
