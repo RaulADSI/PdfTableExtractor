@@ -20,7 +20,7 @@ public class CsvFinalData {
     // Método para procesar el archivo CSV y escribir los datos filtrados
     public void processAndWriteCSV(List<List<String>> matrix, List<int[]> positions) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath))) {
-            writer.write("Account,Invoice date, Service From, Service To, Amount"); // Encabezado opcional
+            writer.write("Number Account,Invoice date, Service From, Service To, Amount"); // Encabezado opcional
             writer.newLine();
 
             for (int[] position : positions) {
