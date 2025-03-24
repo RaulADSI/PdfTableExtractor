@@ -9,7 +9,7 @@ public class CSVArrayListProcessor {
 
     public static void main(String[] args) {
 
-        String csvFilePath = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\Wingate water 12324404 Sept - Oct 2023_filtered.csv";
+        String csvFilePath = "C:\\Users\\strategic\\OneDrive\\Documentos\\consolidated_output.csv";
         String outputFilePath = "C:\\Users\\strategic\\OneDrive\\Documentos\\filtered_output\\FilteredDataInRows.csv";
 
         // Convertir el CSV en una "matriz" usando ArrayList
