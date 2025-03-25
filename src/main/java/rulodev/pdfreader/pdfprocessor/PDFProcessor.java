@@ -9,8 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -31,37 +32,48 @@ public class PDFProcessor {
         return input.replaceAll("[^a-zA-Z0-9\\s.]", ""); // Elimina todo excepto letras, números y espacios.
     }
 
-    public List<List<String>> extractInformationUsingKeywords(File pdfFile, String startKeyword, String stopKeyword) {
+    public List<List<String>> extractDataUsingRegex(File pdfFile) {
         List<List<String>> extractedData = new ArrayList<>();
         try {
             PDDocument document = PDDocument.load(pdfFile);
             PDFTextStripper pdfStripper = new PDFTextStripper();
             String text = pdfStripper.getText(document);
-            String[] lines = text.split("\\r?\\n");
-
-            boolean capture = false;
-            for (String line : lines) {
-                // Si encontramos la palabra clave de inicio, empezamos a capturar
-                if (line.contains(startKeyword)) {
-                    capture = true;
-                }
-
-                if (capture) {
-                    // Procesamos la línea: quitamos caracteres especiales y separamos por espacios
-                    String cleanedLine = removeSpecialCharacters(line);
-                    // Evitamos agregar líneas vacías
-                    if (!cleanedLine.trim().isEmpty()) {
-                        List<String> row = Arrays.asList(cleanedLine.split("\\s+"));
-                        extractedData.add(row);
-                    }
-                }
-
-                // Si encontramos la palabra clave de fin, detenemos la captura
-                if (line.contains(stopKeyword)) {
-                    capture = false;
-                }
-            }
             document.close();
+
+            // --- Definir patrones de expresiones regulares ---
+            // Patrón para montos:
+            // Ejemplo: 1,234.56 o 1234.56 o simplemente 1234
+            Pattern amountPattern = Pattern.compile("\\b\\d{1,3}(,\\d{3})*(\\.\\d{2})?\\b");
+            // Patrón para fechas:
+            // Ejemplo: 12/05/2023 o 3-4-21
+            Pattern datePattern = Pattern.compile("\\b\\d{1,2}[/-]\\d{1,2}[/-]\\d{2,4}\\b");
+            // Patrón para números de cuenta (suponiendo entre 8 y 20 dígitos consecutivos):
+            Pattern accountPattern = Pattern.compile("\\b\\d{8,20}\\b");
+
+            // --- Buscar coincidencias ---
+            List<String> amounts = new ArrayList<>();
+            Matcher amountMatcher = amountPattern.matcher(text);
+            while (amountMatcher.find()) {
+                amounts.add(amountMatcher.group());
+            }
+
+            List<String> dates = new ArrayList<>();
+            Matcher dateMatcher = datePattern.matcher(text);
+            while (dateMatcher.find()) {
+                dates.add(dateMatcher.group());
+            }
+
+            List<String> accountNumbers = new ArrayList<>();
+            Matcher accountMatcher = accountPattern.matcher(text);
+            while (accountMatcher.find()) {
+                accountNumbers.add(accountMatcher.group());
+            }
+
+            // Agregar los resultados a la lista general
+            extractedData.add(amounts);
+            extractedData.add(dates);
+            extractedData.add(accountNumbers);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,17 +152,19 @@ public class PDFProcessor {
         }
     }
 
-    public void processDirectoryByKeywords(String startKeyword, String stopKeyword) {
-        List<List<String>> consolidatedTable = new ArrayList<>();
+    public void processDirectoryByRegex() {
+        List<List<String>> consolidatedData = new ArrayList<>();
         try {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(inputDir), "*.pdf");
             for (Path pdfFilePath : directoryStream) {
                 File pdfFile = pdfFilePath.toFile();
                 System.out.println("Procesando archivo: " + pdfFile.getName());
-                List<List<String>> extractedData = extractInformationUsingKeywords(pdfFile, startKeyword, stopKeyword);
-                consolidatedTable.addAll(extractedData);
+                List<List<String>> extracted = extractDataUsingRegex(pdfFile);
+                // Consolidamos los datos. Por ejemplo, puedes agregar cada sublista en consolidatedData.
+                // Aquí simplemente agregamos todas las listas extraídas.
+                consolidatedData.addAll(extracted);
             }
-            saveToCSV(consolidatedTable, outputFilePath);
+            saveToCSV(consolidatedData, outputFilePath);
             System.out.println("Archivos procesados y resultados guardados en: " + outputFilePath);
         } catch (IOException e) {
             e.printStackTrace();
