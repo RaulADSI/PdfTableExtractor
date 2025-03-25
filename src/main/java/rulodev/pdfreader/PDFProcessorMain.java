@@ -43,12 +43,12 @@ public class PDFProcessorMain {
                     System.out.println("Introduce la ruta completa del archivo PDF:");
                     String pdfFilePath = scanner.nextLine();
                     
-                    System.out.println("Introduce el número de página que deseas procesar (0 para todas):");
+                    System.out.println("Introduce el numero de pagina que deseas procesar (0 para todas):");
                     int pageNumber = scanner.nextInt();
                     
                     try {
                         File pdfFile = new File(pdfFilePath);
-                        System.out.println("Procesando página " + pageNumber + " del archivo: " + pdfFilePath);
+                        System.out.println("Procesando pagina " + pageNumber + " del archivo: " + pdfFilePath);
                         
                         var table = pdfHandler.processSpecificPage(pdfFile, pageNumber);
                         
@@ -62,7 +62,7 @@ public class PDFProcessorMain {
                         FileWriterHelper.saveToCSV(table, consolidatedOutputFile);
                         System.out.println("Resultados guardados en: " + consolidatedOutputFile);
                     } catch (Exception e) {
-                        System.err.println("Ocurrió un error al procesar el archivo: " + e.getMessage());
+                        System.err.println("Ocurrio un error al procesar el archivo: " + e.getMessage());
                     }
                 }
                     
