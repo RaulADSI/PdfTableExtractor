@@ -1,4 +1,4 @@
-package rulodev.pdfreader.pdfprocessor;
+package rulodev.pdfreader.csvprocessor;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;

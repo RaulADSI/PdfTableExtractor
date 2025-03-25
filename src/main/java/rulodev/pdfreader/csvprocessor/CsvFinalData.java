@@ -1,5 +1,5 @@
 
-package rulodev.pdfreader.pdfprocessor;
+package rulodev.pdfreader.csvprocessor;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

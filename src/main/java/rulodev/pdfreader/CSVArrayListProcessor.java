@@ -2,8 +2,8 @@ package rulodev.pdfreader;
 
 import java.util.Arrays;
 import java.util.List;
-import static rulodev.pdfreader.pdfprocessor.CSVArrayList.readCSV;
-import rulodev.pdfreader.pdfprocessor.CsvFinalData;
+import static rulodev.pdfreader.csvprocessor.CSVArrayList.readCSV;
+import rulodev.pdfreader.csvprocessor.CsvFinalData;
 
 public class CSVArrayListProcessor {
 

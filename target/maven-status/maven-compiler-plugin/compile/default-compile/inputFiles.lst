@@ -1,6 +1,11 @@
 C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\PDFProcessorMain.java
-C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\CsvFinalData.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\csvprocessor\CSVProcessor.java
 C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\PDFProcessor.java
-C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\CSVArrayList.java
-C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\CSVProcessor.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\PDFHandler.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\interfaces\FileProcessor.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\FileWriterHelper.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\TextProcessor.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\csvprocessor\CSVArrayList.java
 C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\CSVArrayListProcessor.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\csvprocessor\CsvFinalData.java
+C:\Cursos\JavaEE\Leccion02\pdfReader\src\main\java\rulodev\pdfreader\pdfprocessor\DataExtractor.java

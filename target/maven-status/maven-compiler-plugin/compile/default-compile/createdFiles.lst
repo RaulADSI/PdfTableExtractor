@@ -1,5 +1,10 @@
 rulodev\pdfreader\pdfprocessor\PDFProcessor.class
-rulodev\pdfreader\pdfprocessor\CSVArrayList.class
-rulodev\pdfreader\pdfprocessor\CSVProcessor.class
-rulodev\pdfreader\pdfprocessor\CsvFinalData.class
+rulodev\pdfreader\csvprocessor\CSVArrayList.class
+rulodev\pdfreader\csvprocessor\CSVProcessor.class
+rulodev\pdfreader\interfaces\FileProcessor.class
+rulodev\pdfreader\pdfprocessor\DataExtractor.class
+rulodev\pdfreader\pdfprocessor\PDFHandler.class
+rulodev\pdfreader\csvprocessor\CsvFinalData.class
+rulodev\pdfreader\pdfprocessor\TextProcessor.class
+rulodev\pdfreader\pdfprocessor\FileWriterHelper.class
 rulodev\pdfreader\PDFProcessorMain.class
